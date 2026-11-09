@@ -1,0 +1,28 @@
+name: ArithmP Tests
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  pr_pytest:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v7
+
+      - name: Set up uv and Python
+        uses: astral-sh/setup-uv@v9
+        with:
+          python-version: "3.13"
+
+      - name: Install the project and test dependencies
+        run: uv sync --locked
+
+      - name: Run tests
+        run: uv run --no-sync pytest
